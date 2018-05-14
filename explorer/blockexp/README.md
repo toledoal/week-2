@@ -6,9 +6,19 @@
 
 get Token Address, Name, Symbol and Icon. (Not all tokens have symbol in their contracts)
 
-Token List
+2. Explore calls using web3 for getTransaction
 
-ADT
+3. Explore calls using web3 for Contract
 
-ADX
+4. Explore ABI for contracts and define to get information from ERC20 Token
+
+5. Parse calls to get transactions, decode input and parse "transfers" from Token
+
+6. Try to use Voronoi chart to map information from points (x: index, y: gas, size: value transfered of Token )
+
+7. Show results
+
+8. Extend web3 to use debug mode for transaction tracing
+
+9. Implement d3 chart for information using nodes and arrow nodes
 
