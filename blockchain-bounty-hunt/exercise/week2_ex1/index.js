@@ -14,7 +14,7 @@ axios.get(May2)
     
     for (let block of response.data.blocks){
 
-        if (block.height > 520900 && block.height < 520990){
+        if (block.height > 520900 && block.height < 520999){
         
         console.log(block.height);
         console.log("Processing...");

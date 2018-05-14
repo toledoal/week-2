@@ -1,0 +1,20 @@
+{
+  "name": "exploretries",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Toledo",
+  "license": "ISC",
+  "dependencies": {
+    "ethereumjs-account": "^2.0.5",
+    "ethereumjs-util": "^5.2.0",
+    "ethereumjs-vm": "file:ethereumjs-vm",
+    "leveldown": "^3.0.2",
+    "levelup": "^2.0.2",
+    "merkle-patricia-tree": "^2.3.1",
+    "rlp": "^2.0.0"
+  }
+}

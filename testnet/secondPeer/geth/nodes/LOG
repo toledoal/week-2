@@ -1,0 +1,8 @@
+=============== May 8, 2018 (CDT) ===============
+14:57:39.657629 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:57:39.658504 db@open opening
+14:57:39.661950 version@stat F·[] S·0B[] Sc·[]
+14:57:39.662430 db@janitor F·2 G·0
+14:57:39.662472 db@open done T·3.94317ms
+15:04:11.347483 db@close closing
+15:04:11.348027 db@close done T·541.332µs

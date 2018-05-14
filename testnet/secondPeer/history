@@ -1,0 +1,33 @@
+eth.coinbase
+eth.getbalance
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+eth.accounts
+eth.acconts
+eth.accounts
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+miner.start()
+miner.stop()
+eth.accounts
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+eth.accounts
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+eth.getBalance()
+eth.getBalance(eth.coinbase)
+eth.coinbase
+eth.getBalance(eth.coinbase)
+eth.coinbase
+net.peerCount
+net.peersConnected
+net.peersCount
+net.peerCount
+admin.nodeInfo.enode
+admin.addPeer("enode://c08693c3b5518e3306ec6ef28be1d3c6f088a6304ba4b82882c57802c2701025d762a41ba4d1375a1d4543b0fedf106ac7028f2f704da8c2ce5c45b9facb98f5@[::]:30303?discport=0")
+net.peerCount
+admin.addPeer("enode://c08693c3b5518e3306ec6ef28be1d3c6f088a6304ba4b82882c57802c2701025d762a41ba4d1375a1d4543b0fedf106ac7028f2f704da8c2ce5c45b9facb98f5@159.89.189.226:30303?discport=0")
+net.peerCount
+eth.sendTransaction({from:eth.coinbase, to:0x43f2ed92254a503c1bc77d05284f491f818a09ca, value: 100})
+net.peerCount
+admin.addPeer("enode://c08693c3b5518e3306ec6ef28be1d3c6f088a6304ba4b82882c57802c2701025d762a41ba4d1375a1d4543b0fedf106ac7028f2f704da8c2ce5c45b9facb98f5@159.89.189.226:30303?discport=0")
+eth.accounts
+admin.peers
+admin.addPeer("enode://c08693c3b5518e3306ec6ef28be1d3c6f088a6304ba4b82882c57802c2701025d762a41ba4d1375a1d4543b0fedf106ac7028f2f704da8c2ce5c45b9facb98f5@159.89.189.226:30303?discport=0")
