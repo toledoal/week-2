@@ -7,6 +7,7 @@ import Token from '../Tokens/Token';
 import Canvas from '../Tokens/Canvas';
 import InputDataDecoder from '../../models/ethereum-input-decoder';
 import Charts from '../Charts';
+import Debug from '../Charts/debug';
 import './style.css';
 
 
@@ -241,6 +242,7 @@ class Tokens extends Component {
       </div>  
       <div className="column-b"> 
       <Charts data={this.state.chartInfo === [] ? [] : this.state.chartInfo}/>
+      <Debug/>
       </div>
     </div>
     )
