@@ -53,7 +53,7 @@ import {
     .range([20, 600]);
   const y = scaleLinear()
     .domain([0, 2])
-    .range([0, 100]);
+    .range([0, 1000]);
 
   
 
@@ -76,6 +76,7 @@ import {
                 transactionTraceData: null,
                 tracedLoaded: true,
                 selectedValue: null,
+                selectedNonce: null,
             }
         }
       
@@ -85,7 +86,7 @@ import {
          * @private
          */
         _onNearestXY = (value, {index}) => {
-          this.setState({selectedPointId: index, selectedTransaction: value.hash, selectedValue: value.size});
+          this.setState({selectedPointId: index, selectedTransaction: value.hash, selectedValue: value.size, selectedNonce: value.nonce});
           
         }
 
@@ -117,7 +118,7 @@ import {
         render() {
           const {transactionData, selectedPointId, showVoronoi} = this.state;
           const dat = this.props.data;
-          const datos = this.props.data.map(tx => { return {x: tx.x, y : tx.y }} );
+          const datos = this.props.data.map(tx => { return {x: tx.x, y : tx.nonce }} );
           return (
             <div>
               { this.props.data.length !== 0 ? 
@@ -133,6 +134,7 @@ import {
               <p style={{fontSize:"12px", textAlign:"left"}}>Past Transfer Events for Selected Token since Block 5598000</p>
               <p style={{fontSize:"10px", textAlign:"left"}}>Transaction Hash: {this.state.selectedTransaction}</p>
               <p style={{fontSize:"10px", textAlign:"left"}}>Transfer Value: {this.state.selectedValue}</p> 
+              <p style={{fontSize:"10px", textAlign:"left"}}>Nonce: {this.state.selectedNonce}</p> 
               </div>
               : ""
               }

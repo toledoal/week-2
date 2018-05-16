@@ -147,7 +147,7 @@ class Tokens extends Component {
 
 
             let txData= transactions.map((tx, i) => {
-                return {x: i, y: (tx.gas/10000), size: (parseInt(tx.value)/100000000000000000), hash: tx.hash, }
+                return {x: i, y: (tx.gas/10000), size: (parseInt(tx.value)/100000000000000000), hash: tx.hash, nonce: tx.nonce, }
             });
 
             that.setState({
@@ -173,6 +173,7 @@ class Tokens extends Component {
                 gas: tx.gas,
                 gasPrice: tx.gasPrice,
                 value: tx.decodedInput.inputs[1].toString(),
+                nonce: tx.nonce,
             }
             transactions.push(txPlot);
             }

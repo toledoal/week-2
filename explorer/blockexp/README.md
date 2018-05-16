@@ -2,7 +2,7 @@
 ## ERC20 Token Explorer
 
 
-![alt text](https://raw.githubusercontent.com/toledoal/token-past-events-tracer/master/screenshot.png)
+![alt text](https://raw.githubusercontent.com/toledoal/week-2/master/explorer/blockexp/screenshot.png)
 
 # Main Goal
 I curated a list of ERC20 Tokens from the Ethereum Network to explore their past "transfer" events. The idea is to be able to extract raw information from the debug rpcapi and get insight on how the Token is being used
