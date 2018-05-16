@@ -19,7 +19,7 @@ class App extends Component {
     <div className="menu-buttons">
     <Link to="/">HOME</Link>
     <Link to="/block">BLOCK</Link>
-    <Link to="/Tokens">TOKENS</Link>
+    <Link to="/Tokens">PAST EVENTS TOKEN TRACKER</Link>
     </div>
     <Route exact path="/" component={Home}/>
     <Route exact path="/Tokens" component={Tokens}/>

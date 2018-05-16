@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {scaleLinear} from 'd3-scale';
+import Web3 from 'web3';
+import Debug from '../Charts/debug';
+import Loader  from 'react-loader';
 import {
     Crosshair,
     HorizontalGridLines,
@@ -10,6 +13,22 @@ import {
     YAxis,
     Voronoi
   } from 'react-vis';
+
+  var web3 = new Web3('http://localhost:8545');
+      // DEBUG
+  web3.extend({
+      property: 'debug',
+      methods:
+      [
+          new web3.extend.Method({
+              name: 'traceTransaction',
+              call: 'debug_traceTransaction',
+              params: 2,
+            // inputFormatter: [web3.extend.formatters.formatInputString, web3.extend.formatters],
+            // outputFormatter: web3.extend.formatters.formatOutputString
+          }),
+      ]
+  });
   
   const DATA = [
     {x: 1, y: 4, size: 9},
@@ -52,21 +71,13 @@ import {
                 data: this.props.data,
                 transactionData: this.props.data,
                 selectedPointId: null,
-                showVoronoi: true
+                showVoronoi: true,
+                selectedTransaction: null,
+                transactionTraceData: null,
+                tracedLoaded: true,
+                selectedValue: null,
             }
         }
-
-        //  componentWillReceiveProps(nextProps) {
-        //    if (this.props.data !== nextProps.data) {
-
-        //    }
-        //  }
-        //      let txData = nextProps.data.map((tx, i) => {
-        //          return {x: i, y: (tx.gas/10000), size: (parseInt(tx.value)/100000000000000000) }
-        //      });
-        //    this.setState({data: nextProps.data, transactionData: txData});
-        //  }
-        // }
       
         /**
          * Event handler for onNearestXY.
@@ -74,8 +85,26 @@ import {
          * @private
          */
         _onNearestXY = (value, {index}) => {
-          this.setState({selectedPointId: index});
+          this.setState({selectedPointId: index, selectedTransaction: value.hash, selectedValue: value.size});
+          
         }
+
+         /**
+         * Event handler for onNearestXY.
+         * @param {Object} value Selected value.
+         * @private
+         */
+        _onClick = (e) => {
+          this.setState({tracedLoaded: false});
+          //let tracer = {tracer: '{data: [], fault: function(log){ return log; }, step: function(log) { if(log.op.toString() == "CALL") this.data.push(log.stack.peek(0)); }, result: function() { return this.data; }}'};
+          let transaction = web3.debug.traceTransaction(this.state.selectedTransaction, {});
+          transaction.then( x => this.setState({transactionTraceData: x, tracedLoaded: true}))
+          .catch(e => { 
+            alert("Info Unavailable" + e);
+            this.setState({tracedLoaded: true}); 
+          });
+        }
+
       
         /**
          * Event handler for onMouseLeave.
@@ -88,8 +117,11 @@ import {
         render() {
           const {transactionData, selectedPointId, showVoronoi} = this.state;
           const dat = this.props.data;
+          const datos = this.props.data.map(tx => { return {x: tx.x, y : tx.y }} );
           return (
             <div>
+              { this.props.data.length !== 0 ? 
+              <div>
               <label style={{display: 'block'}}>
                 <input type="checkbox"
                   checked={showVoronoi}
@@ -97,8 +129,16 @@ import {
                 />
                 Show Voronoi
               </label>
+              
+              <p style={{fontSize:"12px", textAlign:"left"}}>Past Transfer Events for Selected Token since Block 5598000</p>
+              <p style={{fontSize:"10px", textAlign:"left"}}>Transaction Hash: {this.state.selectedTransaction}</p>
+              <p style={{fontSize:"10px", textAlign:"left"}}>Transfer Value: {this.state.selectedValue}</p> 
+              </div>
+              : ""
+              }
               <XYPlot
                 onMouseLeave={this._onMouseLeave}
+                onClick={this._onClick}
                 width={600}
                 height={600}>
                 <VerticalGridLines />
@@ -111,16 +151,19 @@ import {
                   data={dat.map((point, index) =>
                     ({...point, color: selectedPointId === index ? '#FF9833' : '#12939A'}))}
                   onNearestXY={this._onNearestXY}
-                  sizeRange={[5, 13]} />
+                  sizeRange={[2, 70]} />
                 <Crosshair values={this.state.crosshairValues}/>
                 <Voronoi
-                  extent={[[40, 10], [600, 600]]}
-                  nodes={dat}
+                  extent={[[0, 0], [600, 600]]}
+                  nodes={datos}
                   polygonStyle={{stroke: showVoronoi ? 'rgba(0, 0, 0, .2)' : null}}
                   x={d => x(d.x)}
                   y={d => y(d.y)}
                 />
               </XYPlot>
+              <Loader className="loader" loaded={this.state.tracedLoaded}>
+              <Debug data={this.state.transactionTraceData} />
+              </Loader>
             </div>
           );
         }

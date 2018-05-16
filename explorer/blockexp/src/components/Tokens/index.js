@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 import _ from 'lodash';
+import Loader  from 'react-loader';
+
 import { Link } from 'react-router-dom'
 import TokenInfo from '../../models/tokens.json';
 import Token from '../Tokens/Token';
 import Canvas from '../Tokens/Canvas';
 import InputDataDecoder from '../../models/ethereum-input-decoder';
 import Charts from '../Charts';
-import Debug from '../Charts/debug';
+
+
 import './style.css';
 
 
@@ -61,7 +64,6 @@ var txABI = [{
         "name":"approve",
         "outputs": []
         }
-
 ];
 
 const decoder = new InputDataDecoder(txABI);
@@ -82,6 +84,7 @@ class Tokens extends Component {
           currentTransaction: null,
           tokenTransactions: [],
           chartInfo: [],
+          chartLoaded: true,
         }
       }
 
@@ -144,16 +147,17 @@ class Tokens extends Component {
 
 
             let txData= transactions.map((tx, i) => {
-                return {x: i, y: (tx.gas/10000), size: (parseInt(tx.value)/100000000000000000) }
+                return {x: i, y: (tx.gas/10000), size: (parseInt(tx.value)/100000000000000000), hash: tx.hash, }
             });
 
             that.setState({
                 tokenTransactions: transactions,
                 chartInfo: txData,
+                chartLoaded: true,
              });
-          }, 2000)
+          }, 1500)
        
-        
+         
        
       }
 
@@ -194,8 +198,10 @@ class Tokens extends Component {
 
     getTokenInfo = (e) => {
         if (e.target !== undefined){
-        this.setState({currentToken:null, chartInfo: []});
+        this.setState({currentToken:null, chartInfo: [], chartLoaded: false});
         this.getToken(e.target.id).then(x=>{
+
+            x[0].totalSupply = parseInt(x[0].totalSupply)/1e18;
 
             this.setState({currentToken:x[0]});
             this.getEvents(x[1]).then(x=>
@@ -218,7 +224,7 @@ class Tokens extends Component {
       var symbol = await token.methods.symbol().call();
       console.log(token);
 
-      return [{name, symbol, totalSupply},token];
+      return [{name, symbol, totalSupply },token];
     }
     }
 
@@ -241,8 +247,9 @@ class Tokens extends Component {
       <div className="table">{tokenList}</div>
       </div>  
       <div className="column-b"> 
+      <Loader className="loader-voronoi" loaded={this.state.chartLoaded}>
       <Charts data={this.state.chartInfo === [] ? [] : this.state.chartInfo}/>
-      <Debug/>
+      </Loader>
       </div>
     </div>
     )
